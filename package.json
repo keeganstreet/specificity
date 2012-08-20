@@ -1,8 +1,8 @@
 {
 	"name" : "specificity",
-	"version" : "0.1.0",
+	"version" : "0.1.1",
 	"description" : "Calculate the specificity of a CSS selector",
-	"keywords" : "CSS, specificity",
+	"keywords" : ["CSS", "specificity"],
 	"homepage" : "https://github.com/keeganstreet/specificity",
 	"author" : {
 		"name" : "Keegan Street",
