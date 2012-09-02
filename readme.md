@@ -29,9 +29,7 @@ The `specificity.calculate` function returns an array containing a result object
 
   * `selector`: the input
   * `specificity`: the result e.g. `0,1,0,0`
-  * `a`: array with details about the IDs contributing to the specificity
-  * `b`: array with details about the classes, attributes and pseudo-classes contributing to the specificity
-  * `c`: array with details about type selectors and pseudo-elements contributing to the specificity
+  * `parts`: array with details about each part of the selector that counts towards the specificity
 
 ## Example
 
@@ -45,12 +43,12 @@ console.log(result);
 [ {
     selector: 'ul#nav li.active a',
     specificity: '0,1,1,3',
-    a: [ { selector: '#nav', index: 2, length: 4 } ],
-    b: [ { selector: '.active', index: 8, length: 7 } ],
-    c: [
-        { selector: 'ul', index: 0, length: 2 },
-        { selector: 'li', index: 5, length: 2 },
-        { selector: 'a', index: 13, length: 1 }
+    parts: [
+      { selector: 'ul', type: 'c', index: 0, length: 2 },
+      { selector: '#nav', type: 'a', index: 2, length: 4 },
+      { selector: 'li', type: 'c', index: 5, length: 2 },
+      { selector: '.active', type: 'b', index: 8, length: 7 },
+      { selector: 'a', type: 'c', index: 13, length: 1 }
     ]
 } ]
 */
