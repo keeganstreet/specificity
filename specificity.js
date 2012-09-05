@@ -77,7 +77,7 @@ var SPECIFICITY = (function() {
 							length: length
 						});
 						// Replace this simple selector with whitespace so it won't be counted in further simple selectors
-						selector = selector.replace(match, Array(length).join(' '));
+						selector = selector.replace(match, Array(length + 1).join(' '));
 					}
 				}
 			}
