@@ -25,7 +25,7 @@ var SPECIFICITY = (function() {
 			results = [];
 
 		// Replace new lines with commas
-		input.replace(/(\r\n|\n|\r)/gm, ',');
+		input = input.replace(/(\r\n|\n|\r)/gm, ',');
 
 		// Separate input by commas
 		selectors = input.split(',');
