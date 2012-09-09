@@ -109,6 +109,10 @@ var SPECIFICITY = (function() {
 		// Remove universal selector and separator characters
 		selector = selector.replace(/[\*\s\+>~]/g, ' ');
 
+		// Remove any stray dots or hashes which aren't attached to words
+		// These may be present if the user is live-editing this selector
+		selector = selector.replace(/[#\.]/g, ' ');
+
 		// The only things left should be element selectors (type c)
 		findMatch(elementRegex, 'c');
 
