@@ -61,24 +61,22 @@ var SPECIFICITY = (function() {
 		// Find matches for a regular expression in a string and push their details to parts
 		// Type is "a" for IDs, "b" for classes, attributes and pseudo-classes and "c" for elements and pseudo-elements
 		findMatch = function(regex, type) {
-			var matches, i, match, index, length;
+			var matches, i, len, match, index, length;
 			if (regex.test(selector)) {
 				matches = selector.match(regex);
-				for (i in matches) {
-					if (matches.hasOwnProperty(i)) {
-						typeCount[type] += 1;
-						match = matches[i];
-						index = selector.indexOf(match);
-						length = match.length;
-						parts.push({
-							selector: match,
-							type: type,
-							index: index,
-							length: length
-						});
-						// Replace this simple selector with whitespace so it won't be counted in further simple selectors
-						selector = selector.replace(match, Array(length + 1).join(' '));
-					}
+				for (i = 0, len = matches.length; i < len; i += 1) {
+					typeCount[type] += 1;
+					match = matches[i];
+					index = selector.indexOf(match);
+					length = match.length;
+					parts.push({
+						selector: match,
+						type: type,
+						index: index,
+						length: length
+					});
+					// Replace this simple selector with whitespace so it won't be counted in further simple selectors
+					selector = selector.replace(match, Array(length + 1).join(' '));
 				}
 			}
 		};
