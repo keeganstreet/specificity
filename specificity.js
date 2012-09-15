@@ -74,7 +74,7 @@ var SPECIFICITY = (function() {
 
 		// Remove the negation psuedo-class (:not) but leave its argument because specificity is calculated on its argument
 		(function() {
-			var regex = /:not\(([^\)]+)\)/g;
+			var regex = /:not\(([^\)]*)\)/g;
 			if (regex.test(selector)) {
 				selector = selector.replace(regex, '     $1 ');
 			}
