@@ -80,6 +80,19 @@ var SPECIFICITY = (function() {
 			}
 		}());
 
+		// Remove anything after a left brace in case a user has pasted in a rule, not just a selector
+		(function() {
+			var regex = /{.*/gm,
+				matches, i, len, match;
+			if (regex.test(selector)) {
+				matches = selector.match(regex);
+				for (i = 0, len = matches.length; i < len; i += 1) {
+					match = matches[i];
+					selector = selector.replace(match, Array(match.length + 1).join(' '));
+				}
+			}
+		}());
+
 		// Add attribute selectors to parts collection (type b)
 		findMatch(attributeRegex, 'b');
 
