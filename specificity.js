@@ -1,9 +1,3 @@
-if (!String.prototype.trim) {
-	String.prototype.trim = function() {
-		return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-	};
-}
-
 /**
  * Calculates the specificity of CSS selectors
  * http://www.w3.org/TR/css3-selectors/#specificity
@@ -24,14 +18,11 @@ var SPECIFICITY = (function() {
 			len,
 			results = [];
 
-		// Replace new lines with commas
-		input = input.replace(/(\r\n|\n|\r)/gm, ',');
-
 		// Separate input by commas
 		selectors = input.split(',');
 
 		for (i = 0, len = selectors.length; i < len; i += 1) {
-			selector = selectors[i].trim();
+			selector = selectors[i];
 			if (selector.length > 0) {
 				results.push(calculateSingle(selector));
 			}
