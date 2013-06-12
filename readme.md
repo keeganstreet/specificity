@@ -1,6 +1,6 @@
 # Specificity Calculator
 
-A JavaScript module for calculating the [specificity of CSS selectors](http://www.w3.org/TR/css3-selectors/#specificity).
+A JavaScript module for calculating the [specificity of CSS selectors](http://www.w3.org/TR/css3-selectors/#specificity). The module is used on the [Specificity Calculator](http://specificity.keegan.st/) website.
 
 ## Front-end usage
 
