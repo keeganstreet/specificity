@@ -1,6 +1,7 @@
 var specificity = require('../'),
 	assert = require('assert'),
-	tests;
+	tests,
+	testSelector;
 
 tests = [
 	// http://css-tricks.com/specifics-on-css-specificity/
@@ -19,15 +20,19 @@ tests = [
 	{ selector: 'p', expected: '0,0,0,1' }
 ];
 
+testSelector = function(test) {
+	describe('#calculate("' + test.selector + '")', function() {
+		it ('should return a specificity of "' + test.expected + '"', function() {
+			var result = specificity.calculate(test.selector);
+			assert.equal(result[0].specificity, test.expected);
+		});
+	});
+};
+
 describe('specificity', function() {
 	var i, len, test;
 	for (i = 0, len = tests.length; i < len; i += 1) {
 		test = tests[i];
-		describe('#calculate("' + test.selector + '")', function() {
-			it ('should return a specificity of "' + test.expected + '"', function() {
-				var result = specificity.calculate(test.selector);
-				assert.equal(test.expected, result[0].specificity);
-			});
-		});
+		testSelector(test);
 	}
 });
