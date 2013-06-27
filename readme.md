@@ -53,3 +53,8 @@ console.log(result);
 } ]
 */
 ```
+
+## Testing
+
+To test this package, install dependencies: `npm install`
+Run: `npm test`
