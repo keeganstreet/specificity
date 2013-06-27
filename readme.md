@@ -2,6 +2,9 @@
 
 A JavaScript module for calculating the [specificity of CSS selectors](http://www.w3.org/TR/css3-selectors/#specificity).
 
+Specificity Calculator is built for CSS Selectors Level 3. Specificity Calculator isn’t a CSS validator. If you enter invalid selectors it will return incorrect results. For example, the [negation pseudo-class](http://www.w3.org/TR/css3-selectors/#negation) may only take a simple selector as an argument. Using a psuedo-element or combinator as an argument for `:not()` is invalid CSS3 so Specificity Calculator will return incorrect results. Specificity Calculator doesn’t support [CSS character escape sequences](http://mathiasbynens.be/notes/css-escapes).
+
+
 ## Front-end usage
 
 ```js
