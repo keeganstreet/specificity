@@ -17,7 +17,19 @@ tests = [
 	{ selector: '#warning p.message', expected: '0,1,1,1' },
 	{ selector: '#warning p', expected: '0,1,0,1' },
 	{ selector: 'p.message', expected: '0,0,1,1' },
-	{ selector: 'p', expected: '0,0,0,1' }
+	{ selector: 'p', expected: '0,0,0,1' },
+
+	// Test pseudo-element with uppercase letters
+	{ selector: 'li:bEfoRE', expected: '0,0,0,2' },
+
+	// Pseudo-class tests
+	{ selector: 'li:first-child+p', expected: '0,0,1,2'},
+	{ selector: 'li:nth-child(even)+p', expected: '0,0,1,2'},
+	{ selector: 'li:nth-child(2n+1)+p', expected: '0,0,1,2'},
+	{ selector: 'li:nth-child( 2n + 1 )+p', expected: '0,0,1,2'},
+	{ selector: 'li:nth-child(2n-1)+p', expected: '0,0,1,2'},
+	{ selector: 'li:nth-child(2n-1) p', expected: '0,0,1,2'},
+	{ selector: ':lang(nl-be)', expected: '0,0,1,0'}
 ];
 
 testSelector = function(test) {

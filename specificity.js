@@ -46,6 +46,9 @@ var SPECIFICITY = (function() {
 			idRegex = /(#[^\s\+>~\.\[:]+)/g,
 			classRegex = /(\.[^\s\+>~\.\[:]+)/g,
 			pseudoElementRegex = /(::[^\s\+>~\.\[:]+|:first-line|:first-letter|:before|:after)/gi,
+			// A regex for pseudo classes with brackets - :nth-child(), :nth-last-child(), :nth-of-type(), :nth-last-type(), :lang()
+			pseudoClassWithBracketsRegex = /(:[\w-]+\([^\)]*\))/gi,
+			// A regex for other pseudo classes, which don't have brackets
 			pseudoClassRegex = /(:[^\s\+>~\.\[:]+)/g,
 			elementRegex = /([^\s\+>~\.\[:]+)/g;
 
@@ -106,6 +109,7 @@ var SPECIFICITY = (function() {
 		findMatch(pseudoElementRegex, 'c');
 
 		// Add pseudo-class selectors to parts collection (type b)
+		findMatch(pseudoClassWithBracketsRegex, 'b');
 		findMatch(pseudoClassRegex, 'b');
 
 		// Remove universal selector and separator characters
