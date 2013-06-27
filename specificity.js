@@ -45,7 +45,7 @@ var SPECIFICITY = (function() {
 			attributeRegex = /(\[[^\]]+\])/g,
 			idRegex = /(#[^\s\+>~\.\[:]+)/g,
 			classRegex = /(\.[^\s\+>~\.\[:]+)/g,
-			pseudoElementRegex = /(::[^\s\+>~\.\[:]+|:first-line|:first-letter|:before|:after)/g,
+			pseudoElementRegex = /(::[^\s\+>~\.\[:]+|:first-line|:first-letter|:before|:after)/gi,
 			pseudoClassRegex = /(:[^\s\+>~\.\[:]+)/g,
 			elementRegex = /([^\s\+>~\.\[:]+)/g;
 
