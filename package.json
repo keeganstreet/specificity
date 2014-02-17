@@ -12,6 +12,7 @@
 		"type" : "git",
 		"url" : "https://github.com/keeganstreet/specificity.git"
 	},
+	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/keeganstreet/specificity/issues"
 	},
