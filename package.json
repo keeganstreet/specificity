@@ -17,9 +17,6 @@
 		"url": "https://github.com/keeganstreet/specificity/issues"
 	},
 	"main": "specificity",
-	"engines": {
-		"node": "~0.8.x"
-	},
 	"scripts": {
 		"test": "node_modules/.bin/mocha test/test.js"
 	},
