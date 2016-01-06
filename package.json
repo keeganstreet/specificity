@@ -1,26 +1,29 @@
 {
-	"name" : "specificity",
-	"version" : "0.1.4",
-	"description" : "Calculate the specificity of a CSS selector",
-	"keywords" : ["CSS", "specificity"],
-	"homepage" : "https://github.com/keeganstreet/specificity",
-	"author" : {
-		"name" : "Keegan Street",
-		"url" : "http://keegan.st"
-	},
-	"repository" : {
-		"type" : "git",
-		"url" : "https://github.com/keeganstreet/specificity.git"
-	},
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/keeganstreet/specificity/issues"
-	},
-	"main": "specificity",
-	"scripts": {
-		"test": "node_modules/.bin/mocha test/test.js"
-	},
-	"devDependencies": {
-		"mocha": "1.11.x"
-	}
+  "name": "specificity",
+  "version": "0.1.5",
+  "description": "Calculate the specificity of a CSS selector",
+  "keywords": [
+    "CSS",
+    "specificity"
+  ],
+  "homepage": "https://github.com/keeganstreet/specificity",
+  "author": {
+    "name": "Keegan Street",
+    "url": "http://keegan.st"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/keeganstreet/specificity.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/keeganstreet/specificity/issues"
+  },
+  "main": "specificity",
+  "scripts": {
+    "test": "node_modules/.bin/mocha test/test.js"
+  },
+  "devDependencies": {
+    "mocha": "1.11.x"
+  }
 }
