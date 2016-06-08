@@ -21,9 +21,9 @@
   },
   "main": "specificity",
   "scripts": {
-    "test": "node_modules/.bin/mocha test/test.js"
+    "test": "mocha test/test.js"
   },
   "devDependencies": {
-    "mocha": "1.11.x"
+    "mocha": "2.5.x"
   }
 }
