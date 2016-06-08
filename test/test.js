@@ -4,17 +4,17 @@ var specificity = require('../'),
 	testSelector;
 
 tests = [
-  // Selectors Level 4 Spec
-  // https://drafts.csswg.org/selectors/#specificity-rules
-  { selector: '*', expected: '0,0,0,0' },
-  { selector: 'li', expected: '0,0,0,1' },
-  { selector: 'ul li', expected: '0,0,0,2' },
-  { selector: 'ul ol+li', expected: '0,0,0,3' },
-  { selector: 'h1 + *[rel=up]', expected: '0,0,1,1' },
-  { selector: 'ul ol li.red', expected: '0,0,1,3' },
-  { selector: 'li.red.level', expected: '0,0,2,1' },
-  { selector: '#x34y', expected: '0,1,0,0' },
-  { selector: '#s12:not(foo)', expected: '0,1,0,1' },
+	// Selectors Level 4 Spec
+	// https://drafts.csswg.org/selectors/#specificity-rules
+	{ selector: '*', expected: '0,0,0,0' },
+	{ selector: 'li', expected: '0,0,0,1' },
+	{ selector: 'ul li', expected: '0,0,0,2' },
+	{ selector: 'ul ol+li', expected: '0,0,0,3' },
+	{ selector: 'h1 + *[rel=up]', expected: '0,0,1,1' },
+	{ selector: 'ul ol li.red', expected: '0,0,1,3' },
+	{ selector: 'li.red.level', expected: '0,0,2,1' },
+	{ selector: '#x34y', expected: '0,1,0,0' },
+	{ selector: '#s12:not(FOO)', expected: '0,1,0,1' },
 
 	// http://css-tricks.com/specifics-on-css-specificity/
 	{ selector: 'ul#nav li.active a', expected: '0,1,1,3' },
