@@ -1,16 +1,9 @@
-/**
- * Calculates the specificity of CSS selectors
- * http://www.w3.org/TR/css3-selectors/#specificity
- *
- * Returns an array of objects with the following properties:
- *  - selector: the input
- *  - specificity: e.g. 0,1,0,0
- *  - parts: array with details about each part of the selector that counts towards the specificity
- */
 var SPECIFICITY = (function() {
 	var calculate,
-		calculateSingle;
+		calculateSingle,
+		compare;
 
+	// Calculate the specificity for a selector by dividing it into simple selectors and counting them
 	calculate = function(input) {
 		var selectors,
 			selector,
@@ -31,7 +24,16 @@ var SPECIFICITY = (function() {
 		return results;
 	};
 
-	// Calculate the specificity for a selector by dividing it into simple selectors and counting them
+	/**
+	 * Calculates the specificity of CSS selectors
+	 * http://www.w3.org/TR/css3-selectors/#specificity
+	 *
+	 * Returns an object with the following properties:
+	 *  - selector: the input
+	 *  - specificity: e.g. 0,1,0,0
+	 *  - parts: array with details about each part of the selector that counts towards the specificity
+	 *  - specificityArray: e.g. [0, 1, 0, 0]
+	 */
 	calculateSingle = function(input) {
 		var selector = input,
 			findMatch,
@@ -131,16 +133,53 @@ var SPECIFICITY = (function() {
 		return {
 			selector: input,
 			specificity: '0,' + typeCount.a.toString() + ',' + typeCount.b.toString() + ',' + typeCount.c.toString(),
+			specificityArray: [0, typeCount.a, typeCount.b, typeCount.c],
 			parts: parts
 		};
 	};
 
+	/**
+	 * Compares two CSS selectors for specificity
+	 *
+	 *  - it returns -1 if a has a lower specificity than b
+	 *  - it returns 1 if a has a higher specificity than b
+	 *  - it returns 0 if a has the same specificity than b
+	 */
+	compare = function(a, b) {
+		var aSpecificity,
+			bSpecificity,
+			i;
+
+		if (a.indexOf(',') !== -1) {
+			throw a + ' is not a valid CSS selector';
+		}
+
+		if (b.indexOf(',') !== -1) {
+			throw b + ' is not a valid CSS selector';
+		}
+
+		aSpecificity = calculateSingle(a)['specificityArray'];
+		bSpecificity = calculateSingle(b)['specificityArray'];
+
+		for (i = 0; i < 4; i += 1) {
+			if (aSpecificity[i] < bSpecificity[i]) {
+				return -1;
+			} else if (aSpecificity[i] > bSpecificity[i]) {
+				return 1;
+			}
+		}
+
+		return 0;
+	};
+
 	return {
-		calculate: calculate
+		calculate: calculate,
+		compare: compare
 	};
 }());
 
 // Export for Node JS
 if (typeof exports !== 'undefined') {
 	exports.calculate = SPECIFICITY.calculate;
+	exports.compare = SPECIFICITY.compare;
 }

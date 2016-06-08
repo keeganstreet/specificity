@@ -57,6 +57,28 @@ console.log(result);
 */
 ```
 
+## Comparing two selectors
+
+Specificity Calculator also exposes a `compare` function. This function accepts two CSS selectors, `a` and `b`.
+
+  * It returns `-1` if `a` has a lower specificity than `b`
+  * It returns `1` if `a` has a higher specificity than `b`
+  * It returns `0` if `a` has the same specificity than `b`
+
+```js
+SPECIFICITY.compare('div', '.active');   // -1
+SPECIFICITY.compare('#main', 'div');     // 1
+SPECIFICITY.compare('span', 'div');      // 0
+```
+
+## Ordering an array of selectors by specificity
+
+You can pass the `SPECIFICITY.compare` function to `Array.prototype.sort` to sort an array of CSS selectors by specificity.
+
+```js
+['#main', 'p', '.active'].sort(SPECIFICITY.compare);   // ['p', '.active', '#main']
+```
+
 ## Testing
 
 To test this package, install dependencies: `npm install`
