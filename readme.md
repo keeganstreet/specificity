@@ -47,6 +47,7 @@ console.log(result);
 [ {
     selector: 'ul#nav li.active a',
     specificity: '0,1,1,3',
+    specificityArray: [0, 1, 1, 3],
     parts: [
       { selector: 'ul', type: 'c', index: 0, length: 2 },
       { selector: '#nav', type: 'a', index: 2, length: 4 },
