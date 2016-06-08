@@ -31,7 +31,8 @@ SPECIFICITY.calculate('ul#nav li.active a, body.ie7 .col_3 h2 ~ h2');   // [{ sp
 The `specificity.calculate` function returns an array containing a result object for each selector input. Each result object has the following properties:
 
   * `selector`: the input
-  * `specificity`: the result e.g. `0,1,0,0`
+  * `specificity`: the result as a string e.g. `0,1,0,0`
+  * `specificityArray`: the result as an array of numbers e.g. `[0, 1, 0, 0]`
   * `parts`: array with details about each part of the selector that counts towards the specificity
 
 ## Example
