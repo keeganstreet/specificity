@@ -29,11 +29,31 @@ tests = [
 	{ selector: 'li:nth-child( 2n + 1 )+p', expected: '0,0,1,2'},
 	{ selector: 'li:nth-child(2n-1)+p', expected: '0,0,1,2'},
 	{ selector: 'li:nth-child(2n-1) p', expected: '0,0,1,2'},
-	{ selector: ':lang(nl-be)', expected: '0,0,1,0'}
+	{ selector: ':lang(nl-be)', expected: '0,0,1,0'},
+
+	// Tests with CSS escape sequences
+	// https://mathiasbynens.be/notes/css-escapes and https://mathiasbynens.be/demo/crazy-class
+	{ selector: '.\\3A -\\)', expected: '0,0,1,0' },             /* <p class=":-)"></p> */
+	{ selector: '.\\3A \\`\\(', expected: '0,0,1,0' },           /* <p class=":`("></p> */
+	{ selector: '.\\3A .\\`\\(', expected: '0,0,2,0' },          /* <p class=": `("></p> */
+	{ selector: '.\\31 a2b3c', expected: '0,0,1,0' },            /* <p class="1a2b3c"></p> */
+	{ selector: '.\\000031a2b3c', expected: '0,0,1,0' },         /* <p class="1a2b3c"></p> */
+	{ selector: '.\\000031 a2b3c', expected: '0,0,1,0' },        /* <p class="1a2b3c"></p> */
+	{ selector: '#\\#fake-id', expected: '0,1,0,0' },            /* <p id="#fake-id"></p> */
+	{ selector: '.\\#fake-id', expected: '0,0,1,0' },            /* <p class="#fake-id"></p> */
+	{ selector: '#\\<p\\>', expected: '0,1,0,0' },               /* <p id="<p>"></p> */
+	{ selector: '.\\#\\.\\#\\.\\#', expected: '0,0,1,0' },       /* <p class="#.#.#"></p> */
+	{ selector: '.foo\\.bar', expected: '0,0,1,0' },             /* <p class="foo.bar"></p> */
+	{ selector: '.\\:hover\\:active', expected: '0,0,1,0' },     /* <p class=":hover:active"></p> */
+	{ selector: '.\\3A hover\\3A active', expected: '0,0,1,0' }, /* <p class=":hover:active"></p> */
+	{ selector: '.\\000031  p', expected: '0,0,1,1' },           /* <p class="1"><p></p></p>" */
+	{ selector: '.\\3A \\`\\( .another', expected: '0,0,2,0' },  /* <p class=":`("><p class="another"></p></p> */
+	{ selector: '.\\--cool', expected: '0,0,1,0' },              /* <p class="--cool"></p> */
+	{ selector: '#home .\\[page\\]', expected: '0,1,1,0' },      /* <p id="home"><p class="[page]"></p></p> */
 ];
 
 testSelector = function(test) {
-	describe('#calculate("' + test.selector + '")', function() {
+	describe('#calculate("    ' + test.selector + '    ")', function() {
 		it ('should return a specificity of "' + test.expected + '"', function() {
 			var result = specificity.calculate(test.selector);
 			assert.equal(result[0].specificity, test.expected);
