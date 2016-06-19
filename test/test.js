@@ -1,7 +1,9 @@
 var specificity = require('../'),
 	assert = require('assert'),
 	tests,
-	testSelector;
+	testSelector,
+	comparisonTests,
+	testCompare;
 
 tests = [
 	// http://css-tricks.com/specifics-on-css-specificity/
@@ -61,10 +63,64 @@ testSelector = function(test) {
 	});
 };
 
+comparisonTests = [
+	{ a: 'div', b: 'span', expected: 0 },
+	{ a: '.active', b: ':focus', expected: 0 },
+	{ a: '#header', b: '#main', expected: 0 },
+	{ a: 'div', b: '.active', expected: -1 },
+	{ a: 'div', b: '#header', expected: -1 },
+	{ a: '.active', b: '#header', expected: -1 },
+	{ a: '.active', b: 'div', expected: 1 },
+	{ a: '#main', b: 'div', expected: 1 },
+	{ a: '#main', b: ':focus', expected: 1 },
+	{ a: 'div p', b: 'span a', expected: 0 },
+	{ a: '#main p .active', b: '#main span :focus', expected: 0 },
+	{ a: ':focus', b: 'span a', expected: 1 },
+	{ a: '#main', b: 'span a:hover', expected: 1 },
+	{ a: 'ul > li > a > span:before', b: '.active', expected: -1 },
+	{ a: 'a.active:hover', b: '#main', expected: -1 }
+];
+
+testCompare = function(test) {
+	it('compare("' + test.a + '", "' + test.b + '") should return ' + test.expected, function() {
+		var result = specificity.compare(test.a, test.b);
+		assert.equal(result, test.expected);
+	});
+};
+
 describe('specificity', function() {
-	var i, len, test;
-	for (i = 0, len = tests.length; i < len; i += 1) {
-		test = tests[i];
-		testSelector(test);
-	}
+	describe('calculate', function() {
+		var i, len, test;
+
+		for (i = 0, len = tests.length; i < len; i += 1) {
+			test = tests[i];
+			testSelector(test);
+		}
+	});
+
+	describe('compare', function() {
+		var i, len, test;
+
+		for (i = 0, len = comparisonTests.length; i < len; i += 1) {
+			test = comparisonTests[i];
+			testCompare(test);
+		}
+	});
+
+	describe('sorting with compare', function() {
+		var a = 'div',
+			b = 'p a',
+			c = '.active',
+			d = 'p.active',
+			e = '.active:focus',
+			f = '#main',
+			original = [c, f, a, e, b, d],
+			sorted = [a, b, c, d, e, f];
+
+		it('array.sort(specificity.compare) should sort the array by specificity', function() {
+			var result = original.sort(specificity.compare);
+
+			assert.equal(result.join('|'), sorted.join('|'));
+		});
+	});
 });
