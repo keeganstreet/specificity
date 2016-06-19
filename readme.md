@@ -59,5 +59,6 @@ console.log(result);
 
 ## Testing
 
-To test this package, install dependencies: `npm install`
-Run: `npm test`
+To install dependencies, run: `npm install`
+
+Then to test, run: `npm test`
