@@ -64,7 +64,7 @@ var SPECIFICITY = (function() {
 					index = selector.indexOf(match);
 					length = match.length;
 					parts.push({
-						selector: match,
+						selector: input.substr(index, length),
 						type: type,
 						index: index,
 						length: length
@@ -74,6 +74,31 @@ var SPECIFICITY = (function() {
 				}
 			}
 		};
+
+		// Replace escaped characters with plain text, using the "A" character
+		// https://www.w3.org/TR/CSS21/syndata.html#characters
+		(function() {
+			var replaceWithPlainText = function(regex) {
+					var matches, i, len, match;
+					if (regex.test(selector)) {
+						matches = selector.match(regex);
+						for (i = 0, len = matches.length; i < len; i += 1) {
+							match = matches[i];
+							selector = selector.replace(match, Array(match.length + 1).join('A'));
+						}
+					}
+				},
+				// Matches a backslash followed by six hexadecimal digits followed by an optional single whitespace character
+				escapeHexadecimalRegex = /\\[0-9A-Fa-f]{6}\s?/g,
+				// Matches a backslash followed by fewer than six hexadecimal digits followed by a mandatory single whitespace character
+				escapeHexadecimalRegex2 = /\\[0-9A-Fa-f]{1,5}\s/g,
+				// Matches a backslash followed by any character
+				escapeSpecialCharacter = /\\./g;
+
+			replaceWithPlainText(escapeHexadecimalRegex);
+			replaceWithPlainText(escapeHexadecimalRegex2);
+			replaceWithPlainText(escapeSpecialCharacter);
+		}());
 
 		// Remove the negation psuedo-class (:not) but leave its argument because specificity is calculated on its argument
 		(function() {
