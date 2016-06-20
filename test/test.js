@@ -75,6 +75,8 @@ comparisonTests = [
 	{ a: '#main', b: ':focus', expected: 1 },
 	{ a: 'div p', b: 'span a', expected: 0 },
 	{ a: '#main p .active', b: '#main span :focus', expected: 0 },
+	{ a: [0, 1, 1, 1], b: '#main span :focus', expected: 0 },
+	{ a: '#main p .active', b: [0, 1, 1, 1], expected: 0 },
 	{ a: ':focus', b: 'span a', expected: 1 },
 	{ a: '#main', b: 'span a:hover', expected: 1 },
 	{ a: 'ul > li > a > span:before', b: '.active', expected: -1 },

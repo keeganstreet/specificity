@@ -165,6 +165,7 @@ var SPECIFICITY = (function() {
 
 	/**
 	 * Compares two CSS selectors for specificity
+	 * Alternatively you can replace one of the CSS selectors with a specificity array
 	 *
 	 *  - it returns -1 if a has a lower specificity than b
 	 *  - it returns 1 if a has a higher specificity than b
@@ -175,16 +176,37 @@ var SPECIFICITY = (function() {
 			bSpecificity,
 			i;
 
-		if (a.indexOf(',') !== -1) {
-			throw a + ' is not a valid CSS selector';
+		if (typeof a ==='string') {
+			if (a.indexOf(',') !== -1) {
+				throw 'Invalid CSS selector';
+			} else {
+				aSpecificity = calculateSingle(a)['specificityArray'];
+			}
+		} else if (Array.isArray(a)) {
+			if (a.filter(function(e) { return (typeof e === 'number'); }).length !== 4) {
+				throw 'Invalid specificity array';
+			} else {
+				aSpecificity = a;
+			}
+		} else {
+			throw 'Invalid CSS selector or specificity array';
 		}
 
-		if (b.indexOf(',') !== -1) {
-			throw b + ' is not a valid CSS selector';
+		if (typeof b ==='string') {
+			if (b.indexOf(',') !== -1) {
+				throw 'Invalid CSS selector';
+			} else {
+				bSpecificity = calculateSingle(b)['specificityArray'];
+			}
+		} else if (Array.isArray(b)) {
+			if (b.filter(function(e) { return (typeof e === 'number'); }).length !== 4) {
+				throw 'Invalid specificity array';
+			} else {
+				bSpecificity = b;
+			}
+		} else {
+			throw 'Invalid CSS selector or specificity array';
 		}
-
-		aSpecificity = calculateSingle(a)['specificityArray'];
-		bSpecificity = calculateSingle(b)['specificityArray'];
 
 		for (i = 0; i < 4; i += 1) {
 			if (aSpecificity[i] < bSpecificity[i]) {
