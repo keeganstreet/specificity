@@ -83,6 +83,23 @@ You can pass the `SPECIFICITY.compare` function to `Array.prototype.sort` to sor
 ['#main', 'p', '.active'].sort(SPECIFICITY.compare);   // ['p', '.active', '#main']
 ```
 
+## Command-line usage
+
+Run `npm install specificity` to install the module locally, or `npm install -g specificity` for global installation. You may need to elevate permissions by `sudo` for the latter. Run `specificity` without arguments to learn about its usage:
+
+```bash
+$ specificity
+Usage: specificity <selector>
+Computes specificity of a CSS selector.
+```
+
+Pass a selector as the first argument to get its specificity computed:
+
+```bash
+$ specificity "ul#nav li.active a"
+0,1,1,3
+```
+
 ## Testing
 
 To install dependencies, run: `npm install`
