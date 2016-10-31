@@ -112,7 +112,7 @@ var SPECIFICITY = (function() {
 
 		// Remove anything after a left brace in case a user has pasted in a rule, not just a selector
 		(function() {
-			var regex = new RegExp('{[^]*', 'gm'),
+			var regex = /{(?:.|\s)*/gm,
 				matches, i, len, match;
 			if (regex.test(selector)) {
 				matches = selector.match(regex);
