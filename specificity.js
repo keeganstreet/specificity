@@ -15,7 +15,7 @@ var SPECIFICITY = (function() {
 		selectors = input.split(',');
 
 		for (i = 0, len = selectors.length; i < len; i += 1) {
-			selector = selectors[i];
+			selector = selectors[i].trim();
 			if (selector.length > 0) {
 				results.push(calculateSingle(selector));
 			}
