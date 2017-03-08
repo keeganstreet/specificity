@@ -90,6 +90,26 @@ testCompare = function(test) {
 	});
 };
 
+validationTests = [
+	{ a: 'div', b: [0, 1, 2, 0], expected: false },
+	{ a: '.active', b: [0, 1, 2, 0], expected: true },
+	{ a: '.message.warning.active', b: [0, 1, 2, 0], expected: false },
+	{ a: '.message .message-body .icon', b: [0, 1, 2, 0], expected: false },
+	{ a: '#main .active div', b: [0, 1, 2, 0], expected: false },
+	{ a: '#main .active', b: [0, 1, 2, 0], expected: true },
+	{ a: '#main #content', b: [0, 1, 2, 0], expected: false },
+	{ a: '#main .active', b: [0, 0, 3, 0], expected: false },
+	{ a: '.message.warning.active', b: [0, 0, 3, 0], expected: true },
+	{ a: '.message .message-body .icon', b: [0, 0, 3, 0], expected: true },
+];
+
+testValidate = function(test) {
+	it('validate("' + test.a + '", "' + test.b + '") should return ' + test.expected, function() {
+		var result = specificity.validate(test.a, test.b);
+		assert.equal(result, test.expected);
+	})
+}
+
 describe('specificity', function() {
 	describe('calculate', function() {
 		var i, len, test;
@@ -106,6 +126,15 @@ describe('specificity', function() {
 		for (i = 0, len = comparisonTests.length; i < len; i += 1) {
 			test = comparisonTests[i];
 			testCompare(test);
+		}
+	});
+
+	describe('validate', function() {
+		var i, len, test;
+
+		for (i = 0, len = validationTests.length; i < len; i += 1) {
+			test = validationTests[i];
+			testValidate(test);
 		}
 	});
 

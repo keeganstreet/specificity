@@ -1,7 +1,8 @@
 var SPECIFICITY = (function() {
 	var calculate,
 		calculateSingle,
-		compare;
+		compare,
+		validate;
 
 	// Calculate the specificity for a selector by dividing it into simple selectors and counting them
 	calculate = function(input) {
@@ -219,9 +220,55 @@ var SPECIFICITY = (function() {
 		return 0;
 	};
 
+	validate = function(a, b) {
+		var aSpecificity,
+			bSpecificity,
+			result = true,
+			i = 0;
+
+		if (typeof a ==='string') {
+			if (a.indexOf(',') !== -1) {
+				throw 'Invalid CSS selector';
+			} else {
+				aSpecificity = calculateSingle(a)['specificityArray'];
+			}
+		} else if (Array.isArray(a)) {
+			if (a.filter(function(e) { return (typeof e === 'number'); }).length !== 4) {
+				throw 'Invalid specificity array';
+			} else {
+				aSpecificity = a;
+			}
+		} else {
+			throw 'Invalid CSS selector or specificity array';
+		}
+
+		if (typeof b ==='string') {
+			if (b.indexOf(',') !== -1) {
+				throw 'Invalid CSS selector';
+			} else {
+				bSpecificity = calculateSingle(b)['specificityArray'];
+			}
+		} else if (Array.isArray(b)) {
+			if (b.filter(function(e) { return (typeof e === 'number'); }).length !== 4) {
+				throw 'Invalid specificity array';
+			} else {
+				bSpecificity = b;
+			}
+		} else {
+			throw 'Invalid CSS selector or specificity array';
+		}
+
+		for (i = 0; result && i < 4; i += 1) {
+			result = aSpecificity[i] <= bSpecificity[i];
+		}
+
+		return result;
+	};
+
 	return {
 		calculate: calculate,
-		compare: compare
+		compare: compare,
+		validate: validate
 	};
 }());
 
@@ -229,4 +276,5 @@ var SPECIFICITY = (function() {
 if (typeof exports !== 'undefined') {
 	exports.calculate = SPECIFICITY.calculate;
 	exports.compare = SPECIFICITY.compare;
+	exports.validate = SPECIFICITY.validate;
 }
