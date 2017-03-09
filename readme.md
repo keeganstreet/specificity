@@ -83,6 +83,21 @@ You can pass the `SPECIFICITY.compare` function to `Array.prototype.sort` to sor
 ['#main', 'p', '.active'].sort(SPECIFICITY.compare);   // ['p', '.active', '#main']
 ```
 
+## Bounds checking
+
+Specificity Calculator also exposes a `validate` function. This function accepts a CSS selector, `a`, and a specificity array, `b`.
+
+  * It returns `true` if each component of `a` has a specificity equal to or lower than its counterpart in `b`
+  * It returns `false` if any component of `a` has a specificity higher than its counterpart in `b`
+
+```js
+SPECIFICITY.validate('.active', [0, 1, 2, 0])                           // true
+SPECIFICITY.validate('.message .message-body .icon', [0, 1, 2, 0])      // false
+SPECIFICITY.validate('#main .active', [0, 1, 2, 0])                     // true
+SPECIFICITY.validate('#main .active div', [0, 1, 2, 0])                 // false
+SPECIFICITY.validate('.message .message-body .icon', [0, 0, 3, 0])      // true
+```
+
 ## Command-line usage
 
 Run `npm install specificity` to install the module locally, or `npm install -g specificity` for global installation. You may need to elevate permissions by `sudo` for the latter. Run `specificity` without arguments to learn about its usage:

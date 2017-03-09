@@ -220,6 +220,12 @@ var SPECIFICITY = (function() {
 		return 0;
 	};
 
+	/**
+	 * Validates that a selector does not exceed a given specificity on a per-component basis.
+	 *
+	 *  - Returns true if each component of a has a specificity equal to or lower than its counterpart in b
+	 *  - Returns false if any component of a has a specificity higher than its counterpart in b
+	 */
 	validate = function(a, b) {
 		var aSpecificity,
 			bSpecificity,
@@ -258,7 +264,7 @@ var SPECIFICITY = (function() {
 			throw 'Invalid CSS selector or specificity array';
 		}
 
-		for (i = 0; result && i < 4; i += 1) {
+		for (; result && i < 4; i += 1) {
 			result = aSpecificity[i] <= bSpecificity[i];
 		}
 
