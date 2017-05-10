@@ -52,6 +52,10 @@ tests = [
 	{ selector: '.\\3A \\`\\( .another', expected: '0,0,2,0' },  /* <p class=":`("><p class="another"></p></p> */
 	{ selector: '.\\--cool', expected: '0,0,1,0' },              /* <p class="--cool"></p> */
 	{ selector: '#home .\\[page\\]', expected: '0,1,1,0' },      /* <p id="home"><p class="[page]"></p></p> */
+
+	// Test repeated IDs
+	// https://github.com/keeganstreet/specificity/issues/29
+	{ selector: 'ul#nav#nav-main li.active a', expected: '0,2,1,3' },
 ];
 
 testSelector = function(test) {

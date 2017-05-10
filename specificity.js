@@ -45,7 +45,7 @@ var SPECIFICITY = (function() {
 			parts = [],
 			// The following regular expressions assume that selectors matching the preceding regular expressions have been removed
 			attributeRegex = /(\[[^\]]+\])/g,
-			idRegex = /(#[^\s\+>~\.\[:]+)/g,
+			idRegex = /(#[^\#\s\+>~\.\[:]+)/g,
 			classRegex = /(\.[^\s\+>~\.\[:]+)/g,
 			pseudoElementRegex = /(::[^\s\+>~\.\[:]+|:first-line|:first-letter|:before|:after)/gi,
 			// A regex for pseudo classes with brackets - :nth-child(), :nth-last-child(), :nth-of-type(), :nth-last-type(), :lang()
