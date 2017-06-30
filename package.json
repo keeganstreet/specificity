@@ -1,6 +1,6 @@
 {
   "name": "specificity",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Calculate the specificity of a CSS selector",
   "keywords": [
     "CSS",
