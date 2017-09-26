@@ -28,5 +28,6 @@
   },
   "devDependencies": {
     "mocha": "2.5.x"
-  }
+  },
+  "types": "specificity.d.ts"
 }
