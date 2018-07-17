@@ -19,15 +19,19 @@
   "bugs": {
     "url": "https://github.com/keeganstreet/specificity/issues"
   },
-  "main": "specificity",
+  "main": "dist/specificity",
+  "module": "dist/specificity.mjs",
   "bin": {
     "specificity": "./bin/specificity"
   },
   "scripts": {
-    "test": "mocha test/test.js"
+    "prepare": "rollup --config",
+    "test": "mocha test/test.js --require esm"
   },
   "devDependencies": {
-    "mocha": "2.5.x"
+    "esm": "^3.0.71",
+    "mocha": "^5.2.0",
+    "rollup": "^0.62.0"
   },
   "types": "specificity.d.ts"
 }
