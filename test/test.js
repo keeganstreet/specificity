@@ -54,6 +54,15 @@ describe('calculate', () => {
 		// Test repeated IDs
 		// https://github.com/keeganstreet/specificity/issues/29
 		{ selector: 'ul#nav#nav-main li.active a', expected: '0,2,1,3' },
+
+		// Test CSS Modules https://github.com/css-modules/css-modules
+		// Whilst they are not part of the CSS spec, this calculator can support them without breaking results for standard selectors
+		{ selector: '.root :global .text', expected: '0,0,2,0' },
+		{ selector: '.localA :global .global-b :local(.local-c) .global-d', expected: '0,0,4,0' },
+		{ selector: '.localA :global .global-b .global-c :local(.localD.localE) .global-d', expected: '0,0,6,0' },
+		{ selector: '.localA :global(.global-b) .local-b', expected: '0,0,3,0' },
+		{ selector: ':local(:nth-child(2n) .test)', expected: '0,0,2,0' },
+		
 	].forEach(testCase => {
 		it(`calculate("${testCase.selector}")`, () => {
 			const result = calculate(testCase.selector);

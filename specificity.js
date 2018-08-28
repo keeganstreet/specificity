@@ -40,13 +40,15 @@ var calculateSingle = function(input) {
 		parts = [],
 		// The following regular expressions assume that selectors matching the preceding regular expressions have been removed
 		attributeRegex = /(\[[^\]]+\])/g,
-		idRegex = /(#[^\#\s\+>~\.\[:]+)/g,
-		classRegex = /(\.[^\s\+>~\.\[:]+)/g,
+		idRegex = /(#[^\#\s\+>~\.\[:\)]+)/g,
+		classRegex = /(\.[^\s\+>~\.\[:\)]+)/g,
 		pseudoElementRegex = /(::[^\s\+>~\.\[:]+|:first-line|:first-letter|:before|:after)/gi,
 		// A regex for pseudo classes with brackets - :nth-child(), :nth-last-child(), :nth-of-type(), :nth-last-type(), :lang()
-		pseudoClassWithBracketsRegex = /(:[\w-]+\([^\)]*\))/gi,
+		// The negation psuedo class (:not) is filtered out because specificity is calculated on its argument
+		// :global and :local are filtered out - they look like psuedo classes but are an identifier for CSS Modules
+		pseudoClassWithBracketsRegex = /(:(?!not|global|local)[\w-]+\([^\)]*\))/gi,
 		// A regex for other pseudo classes, which don't have brackets
-		pseudoClassRegex = /(:[^\s\+>~\.\[:]+)/g,
+		pseudoClassRegex = /(:(?!not|global|local)[^\s\+>~\.\[:]+)/g,
 		elementRegex = /([^\s\+>~\.\[:]+)/g;
 
 	// Find matches for a regular expression in a string and push their details to parts
@@ -97,14 +99,6 @@ var calculateSingle = function(input) {
 		replaceWithPlainText(escapeSpecialCharacter);
 	}());
 
-	// Remove the negation psuedo-class (:not) but leave its argument because specificity is calculated on its argument
-	(function() {
-		var regex = /:not\(([^\)]*)\)/g;
-		if (regex.test(selector)) {
-			selector = selector.replace(regex, '     $1 ');
-		}
-	}());
-
 	// Remove anything after a left brace in case a user has pasted in a rule, not just a selector
 	(function() {
 		var regex = /{[^]*/gm,
@@ -140,6 +134,13 @@ var calculateSingle = function(input) {
 	// Remove any stray dots or hashes which aren't attached to words
 	// These may be present if the user is live-editing this selector
 	selector = selector.replace(/[#\.]/g, ' ');
+
+	// Remove the negation psuedo-class (:not) but leave its argument because specificity is calculated on its argument
+ 	// Remove non-standard :local and :global CSS Module identifiers because they do not effect the specificity
+	selector = selector.replace(/:not/g, '    ');
+	selector = selector.replace(/:local/g, '      ');
+	selector = selector.replace(/:global/g, '       ');
+	selector = selector.replace(/[\(\)]/g, ' ');
 
 	// The only things left should be element selectors (type c)
 	findMatch(elementRegex, 'c');
