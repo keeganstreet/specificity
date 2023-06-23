@@ -12,6 +12,81 @@ describe("calculate specificity", () => {
       expected: { A: 0, B: 0, C: 7 },
     },
 
+    // Selectors Level 4 Spec
+    // https://drafts.csswg.org/selectors/#specificity-rules
+    {
+      selector: "*",
+      expected: {
+        A: 0,
+        B: 0,
+        C: 0,
+      },
+    },
+    {
+      selector: "li",
+      expected: {
+        A: 0,
+        B: 0,
+        C: 1,
+      },
+    },
+    {
+      selector: "ul li",
+      expected: {
+        A: 0,
+        B: 0,
+        C: 2,
+      },
+    },
+    {
+      selector: "ul ol+li",
+      expected: {
+        A: 0,
+        B: 0,
+        C: 3,
+      },
+    },
+    {
+      selector: "h1 + *[rel=up]",
+      expected: {
+        A: 0,
+        B: 1,
+        C: 1,
+      },
+    },
+    {
+      selector: "ul ol li.red",
+      expected: {
+        A: 0,
+        B: 1,
+        C: 3,
+      },
+    },
+    {
+      selector: "li.red.level",
+      expected: {
+        A: 0,
+        B: 2,
+        C: 1,
+      },
+    },
+    {
+      selector: "#x34y",
+      expected: {
+        A: 1,
+        B: 0,
+        C: 0,
+      },
+    },
+    {
+      selector: "#s12:not(foo)",
+      expected: {
+        A: 1,
+        B: 0,
+        C: 1,
+      },
+    },
+
     // http://reference.sitepoint.com/css/specificity
     {
       selector: "body#home div#warning p.message",
