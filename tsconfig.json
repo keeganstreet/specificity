@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "es2015",
+    "esModuleInterop": true,
+    "outDir": "dist/esm",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "dist/types",
+  },
+  "include": ["src"],
+  "exclude": ["**/*.test.ts"]
+}
+
